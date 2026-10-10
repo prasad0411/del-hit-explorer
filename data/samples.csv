@@ -1,0 +1,7 @@
+sample,target,type,replicate,fastq
+BRD4_R1,BRD4,target,1,BRD4_R1.fastq.gz
+BRD4_R2,BRD4,target,2,BRD4_R2.fastq.gz
+KRAS_R1,KRAS,target,1,KRAS_R1.fastq.gz
+KRAS_R2,KRAS,target,2,KRAS_R2.fastq.gz
+NTC_R1,none,control,1,NTC_R1.fastq.gz
+NTC_R2,none,control,2,NTC_R2.fastq.gz
