@@ -48,8 +48,8 @@ Every library barcode is indexed together with all 36 of its one substitution ne
 
 | View | Content |
 |---|---|
-| **Overview** | Reads sequenced, the share passing quality, the share matched to the library, errors corrected, and a quality table per sample |
-| **Hits** | The ranked hits per target, searchable by compound, building block or barcode, filtered by the minimum fold in every replicate |
+| **Overview** | Reads sequenced, the share passing quality, the share matched to the library, errors corrected, a chart of where every read ended up, and a quality table per sample |
+| **Hits** | The ranked hits per target, searchable by compound, building block or barcode, filtered by the minimum fold in every replicate, and downloadable as CSV |
 | **Chemistry** | Which building blocks are over represented in the top hits compared with the library, on one shared scale per target |
 | **Replicates** | log10 RPM of replicate 1 against replicate 2 for every barcode, with the Pearson correlation |
 
@@ -69,6 +69,18 @@ Every library barcode is indexed together with all 36 of its one substitution ne
 | BRD4 chemistry | BB1-03 and BB1-07 lead the first building block position, as planted |
 | KRAS chemistry | BB2-11 is about 14 times over represented in the top hits, as planted |
 | Replicate agreement | Pearson r about 0.70 (BRD4) and 0.81 (KRAS) |
+
+## Scale
+
+The pipeline streams FASTQ files one record at a time, so memory stays flat no matter how many reads come in. Measured with `python -m delx bench` on Darwin arm64, Python 3.12.12:
+
+| Reads | FASTQ (gzipped) | Time | Reads per second | Peak memory |
+|---|---|---|---|---|
+| 999,996 | 21.3 MB | 1.8 s | 545,229 | 73.7 MB |
+| 4,999,998 | 106.7 MB | 9.5 s | 525,649 | 74.1 MB |
+| 9,999,996 | 213.7 MB | 18.0 s | 556,089 | 73.7 MB |
+
+Memory barely moves while the input grows tenfold. At this rate a typical sequencing run of 100 million reads takes a few minutes on one core, and samples are independent, so they split cleanly across HPC jobs or cloud workers.
 
 ## Tech stack
 

@@ -1,0 +1,30 @@
+{
+  "platform": "Darwin arm64, Python 3.12.12",
+  "note": "Peak memory of the pipeline process alone. It stays flat as reads grow because FASTQ files are streamed.",
+  "runs": [
+    {
+      "reads": 999996,
+      "fastq_gz_mb": 21.3,
+      "seconds": 1.8,
+      "reads_per_second": 545229,
+      "peak_memory_mb": 73.7,
+      "generate_seconds": 0.7
+    },
+    {
+      "reads": 4999998,
+      "fastq_gz_mb": 106.7,
+      "seconds": 9.5,
+      "reads_per_second": 525649,
+      "peak_memory_mb": 74.1,
+      "generate_seconds": 3.6
+    },
+    {
+      "reads": 9999996,
+      "fastq_gz_mb": 213.7,
+      "seconds": 18.0,
+      "reads_per_second": 556089,
+      "peak_memory_mb": 73.7,
+      "generate_seconds": 7.2
+    }
+  ]
+}
