@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { filterHits, pearson } from '../hits';
+import { filterHits, pearson, toCsv } from '../hits';
 import type { Hit } from '../types';
 
 const hit = (rank: number, over: Partial<Hit> = {}): Hit => ({
@@ -27,5 +27,15 @@ describe('pearson', () => {
     expect(pearson([[1, 2], [2, 4], [3, 6]])).toBeCloseTo(1);
     expect(pearson([[1, 3], [2, 2], [3, 1]])).toBeCloseTo(-1);
     expect(pearson([[1, 1]])).toBe(0);
+  });
+});
+
+describe('toCsv', () => {
+  it('writes a header and one row per hit, quoting cells that need it', () => {
+    const csv = toCsv([hit(1, { compound: 'CMP, "special"' })]);
+    const [header, row] = csv.trim().split('\n');
+    expect(header.split(',')).toHaveLength(12);
+    expect(row).toContain('"CMP, ""special"""');
+    expect(csv.endsWith('\n')).toBe(true);
   });
 });

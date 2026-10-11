@@ -51,6 +51,21 @@ describe('DEL Hit Explorer', () => {
     expect(screen.queryByText('CMP-0054')).not.toBeInTheDocument();
   });
 
+  it('downloads the filtered hits as CSV', async () => {
+    routeFetch();
+    const created: Blob[] = [];
+    URL.createObjectURL = vi.fn((b: Blob) => { created.push(b); return 'blob:hits'; });
+    URL.revokeObjectURL = vi.fn();
+    const click = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {});
+    const user = userEvent.setup();
+    render(<App />);
+    await user.click(screen.getByRole('link', { name: 'Hits' }));
+    await screen.findByText('CMP-0054');
+    await user.click(screen.getByRole('button', { name: 'Download CSV' }));
+    expect(click).toHaveBeenCalledTimes(1);
+    expect(await created[0].text()).toContain('CMP-0054');
+  });
+
   it('explains a failed load', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('', { status: 404 }));
     render(<App />);

@@ -27,3 +27,28 @@ export function pearson(points: [number, number][]): number {
   }
   return sxx && syy ? sxy / Math.sqrt(sxx * syy) : 0;
 }
+
+const CSV_COLUMNS: (keyof Hit)[] = [
+  'target', 'rank', 'compound', 'barcode', 'bb1', 'bb2', 'bb3',
+  'target_rpm', 'control_rpm', 'log2_r1', 'log2_r2', 'min_log2',
+];
+
+/** The filtered hits as CSV, ready for Excel or a chemist's own analysis. */
+export function toCsv(hits: Hit[]): string {
+  const cell = (v: unknown) => {
+    const s = String(v ?? '');
+    return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  };
+  const rows = hits.map((h) => CSV_COLUMNS.map((c) => cell(h[c])).join(','));
+  return [CSV_COLUMNS.join(','), ...rows].join('\n') + '\n';
+}
+
+/** Saves text as a file in the browser. */
+export function downloadText(filename: string, text: string, type = 'text/csv'): void {
+  const url = URL.createObjectURL(new Blob([text], { type }));
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}

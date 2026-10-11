@@ -198,3 +198,8 @@ input[type='search'], input[type='number'], select { font: inherit; padding: 0.4
 .seg-unmatched { background: #a5b4fc; }
 .seg-noprimer { background: #f59e0b; }
 .seg-lowq { background: #ef4444; }
+
+.toolbar { display: flex; justify-content: flex-end; padding: 0.6rem 1rem; border-bottom: 1px solid var(--line); }
+.toolbar button { font: inherit; font-size: 0.85rem; padding: 0.4rem 0.8rem; border-radius: 8px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink); cursor: pointer; }
+.toolbar button:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+.toolbar button:disabled { opacity: 0.5; cursor: not-allowed; }

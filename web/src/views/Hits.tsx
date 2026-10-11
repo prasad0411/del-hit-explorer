@@ -4,7 +4,7 @@ import { Notice } from '../components/Notice';
 import { Panel } from '../components/Panel';
 import { useData } from '../data';
 import { fixed, num } from '../format';
-import { filterHits } from '../hits';
+import { downloadText, filterHits, toCsv } from '../hits';
 import type { Hit, Summary } from '../types';
 
 const PAGE = 25;
@@ -44,6 +44,11 @@ export function Hits() {
       <Notice error={error} loading={!hits && !error} />
       {hits && (
         <Panel title={`${num(rows.length)} hits for ${active}`}>
+          <div className="toolbar">
+            <button type="button" disabled={!rows.length} onClick={() => downloadText(`${active.toLowerCase()}_hits.csv`, toCsv(rows))}>
+              Download CSV
+            </button>
+          </div>
           <DataTable<Hit>
             rows={rows.slice(0, shown)}
             rowKey={(h) => `${h.target}-${h.barcode}`}
