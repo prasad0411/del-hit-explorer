@@ -37,7 +37,7 @@ describe('DEL Hit Explorer', () => {
     render(<App />);
     expect(await screen.findByText('72,000')).toBeInTheDocument();
     expect(screen.getByText('1,301')).toBeInTheDocument();
-    expect(screen.getByText('BRD4_R1')).toBeInTheDocument();
+    expect(screen.getAllByText('BRD4_R1')).toHaveLength(2);
   });
 
   it('lists hits per target and switches targets', async () => {

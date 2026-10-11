@@ -1,6 +1,7 @@
 import { DataTable } from '../components/DataTable';
 import { Notice } from '../components/Notice';
 import { Panel } from '../components/Panel';
+import { QcChart } from '../components/QcChart';
 import { StatCard } from '../components/StatCard';
 import { useData } from '../data';
 import { num, pct } from '../format';
@@ -36,6 +37,11 @@ export function Overview() {
           ))}
         </ol>
       </Panel>
+      {s && (
+        <Panel title="Where every read ended up" subtitle="Matched reads are counted; the rest were filtered at the step shown">
+          <QcChart qc={s.qc} />
+        </Panel>
+      )}
       {s && (
         <Panel title="Read quality by sample">
           <DataTable<SampleQC>
